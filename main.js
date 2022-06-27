@@ -49,7 +49,6 @@ class BoschEbike extends utils.Adapter {
             this.log.info("Set interval to minimum 0.5");
             this.config.interval = 0.5;
         }
-        this.config.interval = 0.5;
         if (!this.config.username || !this.config.password) {
             this.log.error("Please set username and password in the instance settings");
             return;
