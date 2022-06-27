@@ -381,7 +381,7 @@ class BoschEbike extends utils.Adapter {
                         const forceIndex = true;
                         const preferedArrayName = null;
 
-                        this.json2iob.parse(id + "." + id, data, { forceIndex: forceIndex, preferedArrayName: preferedArrayName, channelName: element.desc });
+                        this.json2iob.parse(id + ".detail", data, { forceIndex: forceIndex, preferedArrayName: preferedArrayName, channelName: element.desc });
                     })
                     .catch((error) => {
                         if (error.response) {
