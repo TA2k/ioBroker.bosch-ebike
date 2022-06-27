@@ -1,0 +1,121 @@
+{
+    "common": {
+        "name": "bosch-ebike",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "首次出版"
+            }
+        },
+        "title": "Bosch eBike",
+        "titleLang": {
+            "en": "Bosch eBike",
+            "de": "Bosch eBike",
+            "ru": "Bosch eBike",
+            "pt": "Bosch eBike",
+            "nl": "Bosch eBike",
+            "fr": "Connexion VAE Bosch",
+            "it": "Bosch eBike",
+            "es": "Bosch eBike",
+            "pl": "Bosch eBike",
+            "zh-cn": "博世电动自行车连接"
+        },
+        "desc": {
+            "en": "Adapter for Bosch eBike",
+            "de": "Adapter für Bosch eBike",
+            "ru": "Адаптер для Bosch eBike",
+            "pt": "Adaptador para Bosch eBike",
+            "nl": "Adapter voor Bosch eBike",
+            "fr": "Adaptateur pour Bosch eBike",
+            "it": "Adattatore per Bosch eBike",
+            "es": "Adaptador para Bosch eBike",
+            "pl": "Adapter do Bosch eBike",
+            "zh-cn": "Bosch eBike 适配器"
+        },
+        "authors": [
+            "TA2k <tombox2020@gmail.com>"
+        ],
+        "keywords": [
+            "bosch",
+            "ebike",
+            "ebike connect"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "bosch-ebike.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/TA2k/ioBroker.bosch-ebike/master/admin/bosch-ebike.png",
+        "readme": "https://github.com/TA2k/ioBroker.bosch-ebike/blob/master/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "vehicle",
+        "compact": true,
+        "connectionType": "cloud",
+        "dataSource": "poll",
+        "materialize": true,
+        "adminUI": {
+            "config": "json"
+        },
+        "plugins": {
+            "sentry": {
+                "dsn": "https://c9bd6c851b1246da95e6e982aa9b88f3@sentry.iobroker.net/152"
+            }
+        },
+        "dependencies": [
+            {
+                "js-controller": ">=3.2.0"
+            }
+        ],
+        "globalDependencies": [
+            {
+                "admin": ">=5.2.28"
+            }
+        ]
+    },
+    "encryptedNative": [
+        "password"
+    ],
+    "protectedNative": [
+        "password"
+    ],
+    "native": {
+        "username": "",
+        "password": "",
+        "interval": 30,
+        "type": "connect"
+    },
+    "objects": [],
+    "instanceObjects": [
+        {
+            "_id": "info",
+            "type": "channel",
+            "common": {
+                "name": "Information"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "role": "indicator.connected",
+                "name": "Device or service connected",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            },
+            "native": {}
+        }
+    ]
+}
