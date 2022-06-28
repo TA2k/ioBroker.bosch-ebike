@@ -151,7 +151,7 @@ class BoschEbike extends utils.Adapter {
             url: "https://identity-myprofile.bosch.com" + loginUrl,
             headers: {
                 Host: "identity-myprofile.bosch.com",
-                Origin: null,
+                Origin: "",
                 Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
                 "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Mobile/15E148 Safari/604.1",
                 "Accept-Language": "de-de",
@@ -161,6 +161,7 @@ class BoschEbike extends utils.Adapter {
         })
             .then((res) => {
                 this.log.error(JSON.stringify(res.data));
+                return;
             })
             .catch((error) => {
                 if (error && error.message.includes("Unsupported protocol")) {
@@ -168,6 +169,7 @@ class BoschEbike extends utils.Adapter {
                 }
                 this.log.error(error);
                 error.response && this.log.error(JSON.stringify(error.response.data));
+                return;
             });
         if (!response) {
             return;
@@ -461,9 +463,11 @@ class BoschEbike extends utils.Adapter {
                 this.log.debug("Refresh successful");
                 this.setState("info.connection", true, true);
             })
-            .catch((error) => {
+            .catch(async (error) => {
                 this.log.error(error);
                 error.response && this.log.error(JSON.stringify(error.response.data));
+                this.setStateAsync("info.connection", false, true);
+                await this.loginFlow();
             });
     }
 
