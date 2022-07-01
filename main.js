@@ -223,12 +223,12 @@ class BoschEbike extends utils.Adapter {
         })
             .then(async (res) => {
                 this.log.debug(JSON.stringify(res.data));
-                this.log.info(`Found ${res.data.length} devices`);
+                this.log.info(`Found ${res.data.my_ebikes.length} devices`);
                 for (const device of res.data.my_ebikes) {
-                    const id = device.id;
+                    const id = device.drive_unit.encoded_serial_number;
 
                     this.deviceArray.push(id);
-                    const name = device.name;
+                    const name = device.drive_unit.device_name;
 
                     await this.setObjectNotExistsAsync(id, {
                         type: "device",
@@ -260,7 +260,7 @@ class BoschEbike extends utils.Adapter {
                             native: {},
                         });
                     });
-                    this.json2iob.parse(id, device);
+                    this.json2iob.parse(id, device, { forceIndex: true });
                 }
             })
             .catch((error) => {
