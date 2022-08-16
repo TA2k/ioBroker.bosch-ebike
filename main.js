@@ -375,6 +375,9 @@ class BoschEbike extends utils.Adapter {
         this.log.error(error);
         error.response && this.log.error(JSON.stringify(error.response.data));
       });
+    if (!trips) {
+      return;
+    }
     this.log.debug(`Found ${trips.length} trips`);
     for (const trip of trips) {
       const id = trip.id;
