@@ -30,7 +30,7 @@ bosch-ebike.0.id.remote auf true/false setzen steuert den jeweiligen Befehl
 
 ## Changelog
 
-### 0.0.1
+### 0.0.2
 * (TA2k) initial release
 
 ## License
