@@ -206,7 +206,9 @@ class BoschEbike extends utils.Adapter {
     const returnObject = {};
     const matches = body.matchAll(/<input (?=[^>]* name=["']([^'"]*)|)(?=[^>]* value=["']([^'"]*)|)/g);
     for (const match of matches) {
-      returnObject[match[1]] = match[2];
+      if (match[2] != null) {
+        returnObject[match[1]] = match[2];
+      }
     }
     return returnObject;
   }
