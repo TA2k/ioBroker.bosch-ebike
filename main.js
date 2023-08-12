@@ -9,7 +9,7 @@
 const utils = require("@iobroker/adapter-core");
 const axios = require("axios").default;
 const qs = require("qs");
-const Json2iob = require("./lib/json2iob");
+const Json2iob = require("json2iob");
 const tough = require("tough-cookie");
 const { HttpsCookieAgent } = require("http-cookie-agent/http");
 
@@ -317,7 +317,11 @@ class BoschEbike extends utils.Adapter {
           const forceIndex = true;
           const preferedArrayName = null;
 
-          this.json2iob.parse(element.path, data, { forceIndex: forceIndex, preferedArrayName: preferedArrayName, channelName: element.desc });
+          this.json2iob.parse(element.path, data, {
+            forceIndex: forceIndex,
+            preferedArrayName: preferedArrayName,
+            channelName: element.desc,
+          });
           await this.setObjectNotExistsAsync(element.path + ".json", {
             type: "state",
             common: {
