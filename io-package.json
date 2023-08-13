@@ -1,8 +1,11 @@
 {
   "common": {
     "name": "bosch-ebike",
-    "version": "0.0.3",
+    "version": "0.1.0",
     "news": {
+      "0.1.0": {
+        "en": "fix flow login"
+      },
       "0.0.3": {
         "en": "fix login"
       },
