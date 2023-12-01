@@ -119,7 +119,19 @@ class BoschEbike extends utils.Adapter {
     let loginUrl = "";
     const formData = await this.requestClient({
       method: "get",
-      url: "https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/auth?prompt=login&nonce=X7Huv5UrsmpElv62Gf8AOm6f933uwCDTHxUXk-Klmfw&response_type=code&kc_idp_hint=ciam-p&scope=openid%20offline_access&code_challenge=jj-YWlMFPXzAOLtEvyRBPxyr-k4z63KrQ4aOodvu0G4&code_challenge_method=S256&redirect_uri=onebikeapp-ios://com.bosch.ebike.onebikeapp/oauth2redirect&client_id=one-bike-app&state=QxAKjgYO_u6wEw_YwaR3AnV8pVBa9MO0ythfehuifR4",
+      url: "https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/auth",
+      params: {
+        prompt: "login",
+        nonce: "5bkl6RxVoUl3yFKi0SqgORYowCT16PG6htILaP0ujhQ",
+        response_type: "code",
+        kc_idp_hint: "skid",
+        scope: "openid offline_access",
+        code_challenge: "dDp31yHNMAGZeMSXeoOK66WOZOtkZjqYzpdZnfbWZfQ",
+        code_challenge_method: "S256",
+        redirect_uri: "onebikeapp-ios://com.bosch.ebike.onebikeapp/oauth2redirect",
+        client_id: "one-bike-app",
+        state: "DECUwcce3we_7TDOt9fiLumGwylUrrjaMyX2vfQM90k",
+      },
       headers: {
         Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "de-de",
@@ -141,38 +153,79 @@ class BoschEbike extends utils.Adapter {
       return;
     }
     const loginParams = qs.parse(loginUrl.split("?")[1]);
-    const token = this.cookieJar.getCookiesSync("https://singlekey-id.com/auth/").find((cookie) => cookie.key === "X-CSRF-FORM-TOKEN");
-    const response = await this.requestClient({
+    const userResponse = await this.requestClient({
       method: "post",
-      url: "https://singlekey-id.com/auth/api/v1/authentication/login",
+      maxBodyLength: Infinity,
+      url: "https://singlekey-id.com/auth/de-de/login",
       headers: {
-        requestverificationtoken: token.value,
-        "content-type": "application/json",
-        accept: "application/json, text/plain, */*",
-        "accept-language": "de-de",
+        "content-type": "application/x-www-form-urlencoded",
+        accept: "*/*",
+        "hx-request": "true",
+        "sec-fetch-site": "same-origin",
+        "hx-boosted": "true",
+        "accept-language": "de-DE,de;q=0.9",
+        "sec-fetch-mode": "cors",
+        origin: "https://singlekey-id.com",
+        "user-agent":
+          "Mozilla/5.0 (iPhone; CPU iPhone OS 16_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",
+        "sec-fetch-dest": "empty",
       },
-      data: JSON.stringify({
-        username: this.config.username,
-        password: this.config.password,
-        keepMeSignedIn: true,
-        returnUrl: loginParams.ReturnUrl,
-      }),
+      params: loginParams,
+      data: {
+        "UserIdentifierInput.EmailInput.StringValue": this.config.username,
+        __RequestVerificationToken: formData["undefined"],
+      },
     })
-      .then(async (res) => {
+      .then((res) => {
         this.log.debug(JSON.stringify(res.data));
-        return await this.requestClient({
-          method: "get",
-          url: "https://singlekey-id.com" + res.data.returnUrl,
-        });
+        return this.extractHidden(res.data);
       })
       .catch((error) => {
-        if (error && error.message.includes("Unsupported protocol")) {
-          return qs.parse(error.request._options.path.split("?")[1]);
-        }
         this.log.error(error);
         error.response && this.log.error(JSON.stringify(error.response.data));
-        return;
       });
+    if (!userResponse) {
+      this.log.error("Could not extract user data");
+      return;
+    }
+    await this.requestClient({
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "https://singlekey-id.com/auth/de-de/login/password",
+      headers: {
+        "content-type": "application/x-www-form-urlencoded",
+        accept: "*/*",
+        "hx-request": "true",
+        "sec-fetch-site": "same-origin",
+        "hx-boosted": "true",
+        "accept-language": "de-DE,de;q=0.9",
+        "sec-fetch-mode": "cors",
+        origin: "https://singlekey-id.com",
+        "user-agent":
+          "Mozilla/5.0 (iPhone; CPU iPhone OS 16_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",
+        "sec-fetch-dest": "empty",
+      },
+      params: loginParams,
+      data: {
+        Password: this.config.password,
+        RememberMe: "true",
+        __RequestVerificationToken: userResponse["undefined"],
+      },
+    }).catch((error) => {
+      this.log.error(error);
+      error.response && this.log.error(JSON.stringify(error.response.data));
+    });
+    const response = await this.requestClient({
+      method: "get",
+      url: "https://singlekey-id.com" + loginParams.returnUrl,
+    }).catch((error) => {
+      if (error && error.message.includes("Unsupported protocol")) {
+        return qs.parse(error.request._options.path.split("?")[1]);
+      }
+      this.log.error(error);
+      error.response && this.log.error(JSON.stringify(error.response.data));
+    });
+
     if (!response) {
       return;
     }
@@ -186,10 +239,13 @@ class BoschEbike extends utils.Adapter {
         "User-Agent": "Flow/56 CFNetwork/1240.0.4 Darwin/20.6.0",
         "Accept-Language": "de-de",
       },
-      data:
-        "code=" +
-        response.code +
-        "&code_verifier=kiR_O850zl5hjw_JIn1tjE4zbRZ7t5QwrmADUrvHaHk&redirect_uri=onebikeapp-ios://com.bosch.ebike.onebikeapp/oauth2redirect&client_id=one-bike-app&grant_type=authorization_code",
+      data: {
+        code: response.code,
+        code_verifier: "u_QNKed3HzTrRyUmAuIOapRILsUFfbDWG5i_AwqRKaU",
+        redirect_uri: "onebikeapp-ios://com.bosch.ebike.onebikeapp/oauth2redirect",
+        client_id: "one-bike-app",
+        grant_type: "authorization_code",
+      },
     })
       .then((res) => {
         this.log.debug(JSON.stringify(res.data));
