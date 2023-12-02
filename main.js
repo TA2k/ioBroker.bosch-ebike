@@ -153,68 +153,33 @@ class BoschEbike extends utils.Adapter {
       return;
     }
     const loginParams = qs.parse(loginUrl.split("?")[1]);
-    const userResponse = await this.requestClient({
+    await this.requestClient({
       method: "post",
-      maxBodyLength: Infinity,
-      url: "https://singlekey-id.com/auth/de-de/login",
+      url: "https://singlekey-id.com/auth/api/v1/authentication/login",
       headers: {
-        "content-type": "application/x-www-form-urlencoded",
-        accept: "*/*",
-        "hx-request": "true",
-        "sec-fetch-site": "same-origin",
-        "hx-boosted": "true",
-        "accept-language": "de-DE,de;q=0.9",
-        "sec-fetch-mode": "cors",
-        origin: "https://singlekey-id.com",
-        "user-agent":
-          "Mozilla/5.0 (iPhone; CPU iPhone OS 16_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",
-        "sec-fetch-dest": "empty",
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        RequestVerificationToken: formData["undefined"],
       },
-      params: loginParams,
-      data: {
-        "UserIdentifierInput.EmailInput.StringValue": this.config.username,
-        __RequestVerificationToken: formData["undefined"],
-      },
+
+      data: JSON.stringify({
+        username: this.config.username,
+        password: this.config.password,
+        keepMeSignedIn: true,
+        returnUrl: loginParams.returnUrl,
+      }),
     })
       .then((res) => {
         this.log.debug(JSON.stringify(res.data));
-        return this.extractHidden(res.data);
+        return res.data;
       })
       .catch((error) => {
+        this.log.error("Please check username and password");
         this.log.error(error);
-        error.response && this.log.error(JSON.stringify(error.response.data));
+        if (error.response) {
+          this.log.error(JSON.stringify(error.response.data));
+        }
       });
-    if (!userResponse) {
-      this.log.error("Could not extract user data");
-      return;
-    }
-    await this.requestClient({
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "https://singlekey-id.com/auth/de-de/login/password",
-      headers: {
-        "content-type": "application/x-www-form-urlencoded",
-        accept: "*/*",
-        "hx-request": "true",
-        "sec-fetch-site": "same-origin",
-        "hx-boosted": "true",
-        "accept-language": "de-DE,de;q=0.9",
-        "sec-fetch-mode": "cors",
-        origin: "https://singlekey-id.com",
-        "user-agent":
-          "Mozilla/5.0 (iPhone; CPU iPhone OS 16_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1",
-        "sec-fetch-dest": "empty",
-      },
-      params: loginParams,
-      data: {
-        Password: this.config.password,
-        RememberMe: "true",
-        __RequestVerificationToken: userResponse["undefined"],
-      },
-    }).catch((error) => {
-      this.log.error(error);
-      error.response && this.log.error(JSON.stringify(error.response.data));
-    });
     const response = await this.requestClient({
       method: "get",
       url: "https://singlekey-id.com" + loginParams.returnUrl,
