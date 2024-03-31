@@ -1,9 +1,13 @@
 {
   "common": {
     "name": "bosch-ebike",
-    "version": "0.1.5",
+    "version": "0.1.7",
     "news": {
-      "0.1.5": {
+      "0.1.7": {
+        "en": "add max trips setting",
+        "de": "Maximale Anzahl von Fahrten hinzufügen"
+      },
+      "0.1.6": {
         "en": "fix flow login"
       },
       "0.1.0": {
@@ -90,6 +94,7 @@
     "username": "",
     "password": "",
     "interval": 30,
+    "maxTrips": 20,
     "type": "connect"
   },
   "objects": [],

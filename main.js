@@ -334,7 +334,11 @@ class BoschEbike extends utils.Adapter {
     const statusArray = [
       {
         path: 'trips',
-        url: 'https://www.ebike-connect.com/ebikeconnect/api/app/activities/trip/headers?max=20&offset=' + Date.now(),
+        url:
+          'https://www.ebike-connect.com/ebikeconnect/api/app/activities/trip/headers?max=' +
+          this.config.maxTrips +
+          '&offset=' +
+          Date.now(),
         desc: 'Trips',
       },
       {
@@ -418,7 +422,7 @@ class BoschEbike extends utils.Adapter {
 
     const trips = await this.requestClient({
       method: 'get',
-      url: 'https://obc-rider-activity.prod.connected-biking.cloud/v1/activity?page=0&size=20&sort=-startTime',
+      url: 'https://obc-rider-activity.prod.connected-biking.cloud/v1/activity?page=0&size=' + this.config.maxTrips + '&sort=-startTime',
       headers: {
         Host: 'obc-rider-activity.prod.connected-biking.cloud',
         accept: '*/*',
