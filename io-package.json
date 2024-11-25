@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "bosch-ebike",
-    "version": "0.1.7",
+    "version": "0.1.9",
     "news": {
+      "0.1.9": {
+        "en": "fix for login",
+        "de": "fix für anmeldung",
+        "ru": "для входа",
+        "pt": "correção para login",
+        "nl": "fix voor aanmelden",
+        "fr": "correction de la connexion",
+        "it": "correzione per il login",
+        "es": "fijación para iniciar sesión",
+        "pl": "fix dla logowania",
+        "uk": "фіксувати логін",
+        "zh-cn": "登录的固定"
+      },
       "0.1.7": {
         "en": "add max trips setting",
         "de": "Maximale Anzahl von Fahrten hinzufügen"
@@ -53,8 +66,14 @@
       "pl": "Adapter do Bosch eBike",
       "zh-cn": "Bosch eBike 适配器"
     },
-    "authors": ["TA2k <tombox2020@gmail.com>"],
-    "keywords": ["bosch", "ebike", "ebike connect"],
+    "authors": [
+      "TA2k <tombox2020@gmail.com>"
+    ],
+    "keywords": [
+      "bosch",
+      "ebike",
+      "ebike connect"
+    ],
     "license": "MIT",
     "platform": "Javascript/Node.js",
     "main": "main.js",
@@ -88,8 +107,12 @@
       }
     ]
   },
-  "encryptedNative": ["password"],
-  "protectedNative": ["password"],
+  "encryptedNative": [
+    "password"
+  ],
+  "protectedNative": [
+    "password"
+  ],
   "native": {
     "username": "",
     "password": "",
