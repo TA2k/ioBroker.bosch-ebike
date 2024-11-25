@@ -135,8 +135,7 @@ class BoschEbike extends utils.Adapter {
       headers: {
         Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         'Accept-Language': 'de-de',
-        'User-Agent':
-          'Mozilla/5.0 (iPhone; CPU iPhone OS 14_8 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Mobile/15E148 Safari/604.1',
+        'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36',
       },
     })
       .then((res) => {
@@ -157,19 +156,22 @@ class BoschEbike extends utils.Adapter {
     const userResponse = await this.requestClient({
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'https://singlekey-id.com/auth/de-de/login',
+      url: 'https://singlekey-id.com' + loginUrl.split('?')[0],
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
         accept: '*/*',
         'hx-request': 'true',
+        'hx-current-url': 'https://singlekey-id.com/' + loginUrl,
         'sec-fetch-site': 'same-origin',
         'hx-boosted': 'true',
         'accept-language': 'de-DE,de;q=0.9',
         'sec-fetch-mode': 'cors',
         origin: 'https://singlekey-id.com',
-        'user-agent':
-          'Mozilla/5.0 (iPhone; CPU iPhone OS 16_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
+        'user-agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36',
         'sec-fetch-dest': 'empty',
+        referer: 'https://singlekey-id.com/' + loginUrl,
+        pragma: 'no-cache',
+        priority: 'u=1, i',
       },
       params: loginParams,
       data: {
@@ -189,10 +191,11 @@ class BoschEbike extends utils.Adapter {
       this.log.error('Could not extract user data');
       return;
     }
+    //const query = userResponse.returnPath.split('?')[1].replace(/&amp;/g, '&').replace("ReturnUrl='", 'returnUrl=');
     await this.requestClient({
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'https://singlekey-id.com/auth/de-de/login/password',
+      url: 'https://singlekey-id.com' + userResponse.returnPath.split('?')[0],
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
         accept: '*/*',
@@ -219,13 +222,19 @@ class BoschEbike extends utils.Adapter {
     const response = await this.requestClient({
       method: 'get',
       url: 'https://singlekey-id.com' + returnUrl,
-    }).catch((error) => {
-      if (error && error.message.includes('Unsupported protocol')) {
-        return qs.parse(error.request._options.path.split('?')[1]);
-      }
-      this.log.error(error);
-      error.response && this.log.error(JSON.stringify(error.response.data));
-    });
+    })
+      .then((res) => {
+        this.log.debug(JSON.stringify(res.data));
+        this.log.error('No code received.');
+        return res;
+      })
+      .catch((error) => {
+        if (error && error.message.includes('Unsupported protocol')) {
+          return qs.parse(error.request._options.path.split('?')[1]);
+        }
+        this.log.error(error);
+        error.response && this.log.error(JSON.stringify(error.response.data));
+      });
 
     if (!response) {
       return;
@@ -557,6 +566,7 @@ class BoschEbike extends utils.Adapter {
       this.refreshTokenInterval && clearInterval(this.refreshTokenInterval);
       callback();
     } catch (e) {
+      this.log.error(e);
       callback();
     }
   }
@@ -569,7 +579,7 @@ class BoschEbike extends utils.Adapter {
   async onStateChange(id, state) {
     if (state) {
       if (!state.ack) {
-        const deviceId = id.split('.')[2];
+        // const deviceId = id.split('.')[2];
         const command = id.split('.')[4];
         if (id.split('.')[3] !== 'remote') {
           return;
