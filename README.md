@@ -29,6 +29,9 @@ bosch-ebike.0.id.remote auf true/false setzen steuert den jeweiligen Befehl
 <https://forum.iobroker.net/topic/55902/test-adapter-bosch-ebik-connect-flow>
 
 ## Changelog
+### 0.1.8 (2024-11-25)
+
+- fix for login
 
 ### 0.1.5
 
