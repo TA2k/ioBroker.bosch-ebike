@@ -145,10 +145,16 @@ class BoschEbike extends utils.Adapter {
       })
       .catch((error) => {
         this.log.error(error);
+
+        error.errors && this.log.error(JSON.stringify(error.errors));
         error.response && this.log.error(JSON.stringify(error.response.data));
       });
     if (!formData) {
       this.log.error('Could not extract form data');
+      this.log.warn(
+        'Please check your login on https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/auth?client_id=one-bike-app&code_challenge=dDp31yHNMAGZeMSXeoOK66WOZOtkZjqYzpdZnfbWZfQ&code_challenge_method=S256&kc_idp_hint=skid&nonce=5bkl6RxVoUl3yFKi0SqgORYowCT16PG6htILaP0ujhQ&prompt=login&redirect_uri=onebikeapp-ios%3A%2F%2Fcom.bosch.ebike.onebikeapp%2Foauth2redirect&response_type=code&scope=openid%20offline_access&state=DECUwcce3we_7TDOt9fiLumGwylUrrjaMyX2vfQM90k',
+      );
+
       return;
     }
     const loginParams = qs.parse(loginUrl.split('?')[1]);
