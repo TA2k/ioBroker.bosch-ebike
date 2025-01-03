@@ -1,9 +1,9 @@
 {
   "common": {
     "name": "bosch-ebike",
-    "version": "0.1.10",
+    "version": "0.1.11",
     "news": {
-      "0.1.10": {
+      "0.1.11": {
         "en": "fix for login. Deletion of the instance is necessary if the settings screen is not loading",
         "de": "fix für Anmeldung. Löschung der Instanz ist erforderlich, wenn die Einstellungen nicht geladen werden können",
         "ru": "починить для входа. Исключение экземпляра необходимо",

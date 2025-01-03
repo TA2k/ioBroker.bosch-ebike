@@ -75,8 +75,16 @@ class BoschEbike extends utils.Adapter {
         this.refreshToken();
       }, this.session.expires_in * 1000);
     } else {
-      this.log.info('Login to eBike flow');
-      await this.loginFlow();
+      const sessionState = await this.getStateAsync('auth.session');
+      if (sessionState && sessionState.val) {
+        this.session = JSON.parse(sessionState.val);
+        this.log.info('Session found. If the login fails please delete bosch-ebike.0.auth.session and restart the adapter');
+        this.log.debug(JSON.stringify(this.session));
+        await this.refreshToken();
+      } else {
+        this.log.info('Login to eBike flow');
+        await this.loginFlow();
+      }
 
       if (this.session.access_token) {
         await this.updateDevicesFlow(true);
@@ -104,7 +112,7 @@ class BoschEbike extends utils.Adapter {
         username: this.config.username,
       }),
     })
-      .then((res) => {
+      .then(async (res) => {
         this.log.debug(JSON.stringify(res.data));
         this.setState('info.connection', true, true);
         this.session = res.data;
@@ -268,11 +276,23 @@ class BoschEbike extends utils.Adapter {
         grant_type: 'authorization_code',
       },
     })
-      .then((res) => {
+      .then(async (res) => {
         this.log.debug(JSON.stringify(res.data));
         this.session = res.data;
         this.log.info('Login successful');
         this.setState('info.connection', true, true);
+        await this.extendObject('auth.session', {
+          type: 'state',
+          common: {
+            name: 'Session Token',
+            type: 'string',
+            role: 'value',
+            read: true,
+            write: false,
+          },
+          native: {},
+        });
+        this.setState('auth.session', JSON.stringify(this.session), true);
       })
       .catch((error) => {
         this.log.error(error);
@@ -549,13 +569,26 @@ class BoschEbike extends utils.Adapter {
         grant_type: 'refresh_token',
       }),
     })
-      .then((res) => {
+      .then(async (res) => {
         this.log.debug(JSON.stringify(res.data));
         this.session = res.data;
         this.log.debug('Refresh successful');
         this.setState('info.connection', true, true);
+        await this.extendObject('auth.session', {
+          type: 'state',
+          common: {
+            name: 'Session Token',
+            type: 'string',
+            role: 'value',
+            read: true,
+            write: false,
+          },
+          native: {},
+        });
+        this.setState('auth.session', JSON.stringify(this.session), true);
       })
       .catch(async (error) => {
+        this.log.error('refresh token failed. Please delete bosch-ebike.0.auth.session and restart the adapter');
         this.log.error(error);
         error.response && this.log.error(JSON.stringify(error.response.data));
         this.setStateAsync('info.connection', false, true);
@@ -567,7 +600,7 @@ class BoschEbike extends utils.Adapter {
    * Is called when adapter shuts down - callback has to be called under any circumstances!
    * @param {() => void} callback
    */
-  onUnload(callback) {
+  async onUnload(callback) {
     try {
       this.setState('info.connection', false, true);
       this.refreshTimeout && clearTimeout(this.refreshTimeout);
@@ -575,6 +608,11 @@ class BoschEbike extends utils.Adapter {
       this.refreshTokenTimeout && clearTimeout(this.refreshTokenTimeout);
       this.updateInterval && clearInterval(this.updateInterval);
       this.refreshTokenInterval && clearInterval(this.refreshTokenInterval);
+      if (this.config.captcha) {
+        const adapterSettings = await this.getForeignObjectAsync('system.adapter.' + this.namespace);
+        adapterSettings.native.captcha = null;
+        await this.setForeignObjectAsync('system.adapter.' + this.namespace, adapterSettings);
+      }
       callback();
     } catch (e) {
       this.log.error(e);

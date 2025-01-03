@@ -30,7 +30,7 @@ bosch-ebike.0.id.remote auf true/false setzen steuert den jeweiligen Befehl
 
 ## Changelog
 
-### 0.1.10 (2025-01-03)
+### 0.1.11 (2025-01-03)
 
 - fix for login. Deletion of the instance is necessary if the settings screen is not loading.
 
