@@ -1,6 +1,6 @@
 {
   "name": "iobroker.bosch-ebike",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Adapter for Bosch eBike",
   "author": {
     "name": "TA2k",
