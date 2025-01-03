@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "bosch-ebike",
-    "version": "0.1.9",
+    "version": "0.1.10",
     "news": {
+      "0.1.10": {
+        "en": "fix for login. Deletion of the instance is necessary if the settings screen is not loading",
+        "de": "fix für Anmeldung. Löschung der Instanz ist erforderlich, wenn die Einstellungen nicht geladen werden können",
+        "ru": "починить для входа. Исключение экземпляра необходимо",
+        "pt": "corrigir para login. A exclusão da instância é necessária",
+        "nl": "fix voor login. Verwijdering van de instantie is noodzakelijk",
+        "fr": "correction pour la connexion. Suppression de l'instance est nécessaire",
+        "it": "fix per il login. La cancellazione dell'istanza è necessaria",
+        "es": "para iniciar sesión. La supresión de la instancia es necesaria",
+        "pl": "naprawić logowanie. Usunięcie instancji jest konieczne",
+        "uk": "фіксувати логін. Видалення екземпляра необхідно",
+        "zh-cn": "用于登录的固定。 有必要删除案件"
+      },
       "0.1.9": {
         "en": "fix for login",
         "de": "fix für anmeldung",
@@ -82,7 +95,6 @@
     "connectionType": "cloud",
     "dataSource": "poll",
     "materialize": true,
-
     "plugins": {
       "sentry": {
         "dsn": "https://c9bd6c851b1246da95e6e982aa9b88f3@sentry.iobroker.net/152"
