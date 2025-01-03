@@ -117,6 +117,10 @@ class BoschEbike extends utils.Adapter {
 
   async loginFlow() {
     let loginUrl = '';
+    if (!this.config.captcha) {
+      this.log.error('Please set captcha in the instance settings');
+      return;
+    }
     const formData = await this.requestClient({
       method: 'get',
       url: 'https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/auth',
@@ -182,6 +186,7 @@ class BoschEbike extends utils.Adapter {
       params: loginParams,
       data: {
         'UserIdentifierInput.EmailInput.StringValue': this.config.username,
+        'h-captcha-response': this.config.captcha,
         __RequestVerificationToken: formData['undefined'],
       },
     })

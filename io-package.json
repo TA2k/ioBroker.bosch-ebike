@@ -66,14 +66,8 @@
       "pl": "Adapter do Bosch eBike",
       "zh-cn": "Bosch eBike 适配器"
     },
-    "authors": [
-      "TA2k <tombox2020@gmail.com>"
-    ],
-    "keywords": [
-      "bosch",
-      "ebike",
-      "ebike connect"
-    ],
+    "authors": ["TA2k <tombox2020@gmail.com>"],
+    "keywords": ["bosch", "ebike", "ebike connect"],
     "license": "MIT",
     "platform": "Javascript/Node.js",
     "main": "main.js",
@@ -88,9 +82,7 @@
     "connectionType": "cloud",
     "dataSource": "poll",
     "materialize": true,
-    "adminUI": {
-      "config": "json"
-    },
+
     "plugins": {
       "sentry": {
         "dsn": "https://c9bd6c851b1246da95e6e982aa9b88f3@sentry.iobroker.net/152"
@@ -107,18 +99,15 @@
       }
     ]
   },
-  "encryptedNative": [
-    "password"
-  ],
-  "protectedNative": [
-    "password"
-  ],
+  "encryptedNative": ["password"],
+  "protectedNative": ["password"],
   "native": {
     "username": "",
     "password": "",
     "interval": 30,
     "maxTrips": 20,
-    "type": "connect"
+    "type": "flow",
+    "captcha": ""
   },
   "objects": [],
   "instanceObjects": [
