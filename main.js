@@ -124,7 +124,6 @@ class BoschEbike extends utils.Adapter {
   }
 
   async loginFlow() {
-    let loginUrl = '';
     if (!this.config.captcha) {
       this.log.error('Please set code url in the instance settings');
       return;
@@ -133,6 +132,8 @@ class BoschEbike extends utils.Adapter {
       this.log.error('Please set correctcode url in the instance settings');
       return;
     }
+
+    //let loginUrl = '';
     // const formData = await this.requestClient({
     //   method: 'get',
     //   url: 'https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/auth',
