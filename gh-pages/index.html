@@ -1,0 +1,41 @@
+<html>
+  <head> </head>
+
+  
+          <div>
+            <form id="captcha_form" action="#" method="post">
+              <!-- hCaptcha widget -->
+              <div class="h-captcha" data-sitekey="f8fe2d56-ad42-4f44-b9fe-5b30fcb0dd38"></div>
+              <br />
+              <button type="submit" class="btn">Submit</button>
+            </form>
+
+            <!-- hCaptcha script -->
+            <script src="https://hcaptcha.com/1/api.js" async defer></script>
+          </div>
+       
+        <p></p>
+        <script>
+          document.getElementById('captcha_form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const hCaptchaResponse = document.querySelector('[name="h-captcha-response"]').value;
+            const responseElement = document.getElementById('captchaResponse');
+
+            if (hCaptchaResponse) {
+              if (typeof hCaptchaResponse === 'object') {
+                hCaptchaResponse = JSON.stringify(hCaptchaResponse);
+              }
+              document.getElementById('captcha').value = hCaptchaResponse;
+              //trigger change event
+              var event = new Event('change');
+              document.getElementById('captcha').dispatchEvent(event);
+            }
+          });
+        </script>
+
+        <input type="text" class="value" id="captcha" />
+        <label for="captcha" class="translate">Captcha</label>
+     
+  </body>
+</html>
