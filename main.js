@@ -126,138 +126,143 @@ class BoschEbike extends utils.Adapter {
   async loginFlow() {
     let loginUrl = '';
     if (!this.config.captcha) {
-      this.log.error('Please set captcha in the instance settings');
+      this.log.error('Please set code url in the instance settings');
       return;
     }
-    const formData = await this.requestClient({
-      method: 'get',
-      url: 'https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/auth',
-      params: {
-        prompt: 'login',
-        nonce: '5bkl6RxVoUl3yFKi0SqgORYowCT16PG6htILaP0ujhQ',
-        response_type: 'code',
-        kc_idp_hint: 'skid',
-        scope: 'openid offline_access',
-        code_challenge: 'dDp31yHNMAGZeMSXeoOK66WOZOtkZjqYzpdZnfbWZfQ',
-        code_challenge_method: 'S256',
-        redirect_uri: 'onebikeapp-ios://com.bosch.ebike.onebikeapp/oauth2redirect',
-        client_id: 'one-bike-app',
-        state: 'DECUwcce3we_7TDOt9fiLumGwylUrrjaMyX2vfQM90k',
-      },
-      headers: {
-        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'de-de',
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36',
-      },
-    })
-      .then((res) => {
-        this.log.debug(JSON.stringify(res.data));
-        loginUrl = res.request.path;
-        return this.extractHidden(res.data);
-      })
-      .catch((error) => {
-        this.log.error(error);
+    if (!this.config.captcha.startsWith('onebikeapp-ios')) {
+      this.log.error('Please set correctcode url in the instance settings');
+      return;
+    }
+    // const formData = await this.requestClient({
+    //   method: 'get',
+    //   url: 'https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/auth',
+    //   params: {
+    //     prompt: 'login',
+    //     nonce: '5bkl6RxVoUl3yFKi0SqgORYowCT16PG6htILaP0ujhQ',
+    //     response_type: 'code',
+    //     kc_idp_hint: 'skid',
+    //     scope: 'openid offline_access',
+    //     code_challenge: 'dDp31yHNMAGZeMSXeoOK66WOZOtkZjqYzpdZnfbWZfQ',
+    //     code_challenge_method: 'S256',
+    //     redirect_uri: 'onebikeapp-ios://com.bosch.ebike.onebikeapp/oauth2redirect',
+    //     client_id: 'one-bike-app',
+    //     state: 'DECUwcce3we_7TDOt9fiLumGwylUrrjaMyX2vfQM90k',
+    //   },
+    //   headers: {
+    //     Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9',
+    //     'Accept-Language': 'de-de',
+    //     'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36',
+    //   },
+    // })
+    //   .then((res) => {
+    //     this.log.debug(JSON.stringify(res.data));
+    //     loginUrl = res.request.path;
+    //     return this.extractHidden(res.data);
+    //   })
+    //   .catch((error) => {
+    //     this.log.error(error);
 
-        error.errors && this.log.error(JSON.stringify(error.errors));
-        error.response && this.log.error(JSON.stringify(error.response.data));
-      });
-    if (!formData) {
-      this.log.error('Could not extract form data');
-      this.log.warn(
-        'Please check your login on https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/auth?client_id=one-bike-app&code_challenge=dDp31yHNMAGZeMSXeoOK66WOZOtkZjqYzpdZnfbWZfQ&code_challenge_method=S256&kc_idp_hint=skid&nonce=5bkl6RxVoUl3yFKi0SqgORYowCT16PG6htILaP0ujhQ&prompt=login&redirect_uri=onebikeapp-ios%3A%2F%2Fcom.bosch.ebike.onebikeapp%2Foauth2redirect&response_type=code&scope=openid%20offline_access&state=DECUwcce3we_7TDOt9fiLumGwylUrrjaMyX2vfQM90k',
-      );
+    //     error.errors && this.log.error(JSON.stringify(error.errors));
+    //     error.response && this.log.error(JSON.stringify(error.response.data));
+    //   });
+    // if (!formData) {
+    //   this.log.error('Could not extract form data');
+    //   this.log.warn(
+    //     'Please check your login on https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/auth?client_id=one-bike-app&code_challenge=dDp31yHNMAGZeMSXeoOK66WOZOtkZjqYzpdZnfbWZfQ&code_challenge_method=S256&kc_idp_hint=skid&nonce=5bkl6RxVoUl3yFKi0SqgORYowCT16PG6htILaP0ujhQ&prompt=login&redirect_uri=onebikeapp-ios%3A%2F%2Fcom.bosch.ebike.onebikeapp%2Foauth2redirect&response_type=code&scope=openid%20offline_access&state=DECUwcce3we_7TDOt9fiLumGwylUrrjaMyX2vfQM90k',
+    //   );
 
-      return;
-    }
-    const loginParams = qs.parse(loginUrl.split('?')[1]);
-    const returnUrl = loginParams.returnUrl || loginParams.ReturnUrl;
-    const userResponse = await this.requestClient({
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: 'https://singlekey-id.com' + loginUrl.split('?')[0],
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded',
-        accept: '*/*',
-        'hx-request': 'true',
-        'hx-current-url': 'https://singlekey-id.com/' + loginUrl,
-        'sec-fetch-site': 'same-origin',
-        'hx-boosted': 'true',
-        'accept-language': 'de-DE,de;q=0.9',
-        'sec-fetch-mode': 'cors',
-        origin: 'https://singlekey-id.com',
-        'user-agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36',
-        'sec-fetch-dest': 'empty',
-        referer: 'https://singlekey-id.com/' + loginUrl,
-        pragma: 'no-cache',
-        priority: 'u=1, i',
-      },
-      params: loginParams,
-      data: {
-        'UserIdentifierInput.EmailInput.StringValue': this.config.username,
-        'h-captcha-response': this.config.captcha,
-        __RequestVerificationToken: formData['undefined'],
-      },
-    })
-      .then((res) => {
-        this.log.debug(JSON.stringify(res.data));
-        return this.extractHidden(res.data);
-      })
-      .catch((error) => {
-        this.log.error(error);
-        error.response && this.log.error(JSON.stringify(error.response.data));
-      });
-    if (!userResponse) {
-      this.log.error('Could not extract user data');
-      return;
-    }
-    //const query = userResponse.returnPath.split('?')[1].replace(/&amp;/g, '&').replace("ReturnUrl='", 'returnUrl=');
-    await this.requestClient({
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: 'https://singlekey-id.com' + userResponse.returnPath.split('?')[0],
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded',
-        accept: '*/*',
-        'hx-request': 'true',
-        'sec-fetch-site': 'same-origin',
-        'hx-boosted': 'true',
-        'accept-language': 'de-DE,de;q=0.9',
-        'sec-fetch-mode': 'cors',
-        origin: 'https://singlekey-id.com',
-        'user-agent':
-          'Mozilla/5.0 (iPhone; CPU iPhone OS 16_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
-        'sec-fetch-dest': 'empty',
-      },
-      params: loginParams,
-      data: {
-        Password: this.config.password,
-        RememberMe: 'true',
-        __RequestVerificationToken: userResponse['undefined'],
-      },
-    }).catch((error) => {
-      this.log.error(error);
-      error.response && this.log.error(JSON.stringify(error.response.data));
-    });
-    const response = await this.requestClient({
-      method: 'get',
-      url: 'https://singlekey-id.com' + returnUrl,
-    })
-      .then((res) => {
-        this.log.debug(JSON.stringify(res.data));
-        this.log.error('No code received.');
-        return res;
-      })
-      .catch((error) => {
-        if (error && error.message.includes('Unsupported protocol')) {
-          return qs.parse(error.request._options.path.split('?')[1]);
-        }
-        this.log.error(error);
-        error.response && this.log.error(JSON.stringify(error.response.data));
-      });
+    //   return;
+    // }
+    // const loginParams = qs.parse(loginUrl.split('?')[1]);
+    // const returnUrl = loginParams.returnUrl || loginParams.ReturnUrl;
+    // const userResponse = await this.requestClient({
+    //   method: 'post',
+    //   maxBodyLength: Infinity,
+    //   url: 'https://singlekey-id.com' + loginUrl.split('?')[0],
+    //   headers: {
+    //     'content-type': 'application/x-www-form-urlencoded',
+    //     accept: '*/*',
+    //     'hx-request': 'true',
+    //     'hx-current-url': 'https://singlekey-id.com/' + loginUrl,
+    //     'sec-fetch-site': 'same-origin',
+    //     'hx-boosted': 'true',
+    //     'accept-language': 'de-DE,de;q=0.9',
+    //     'sec-fetch-mode': 'cors',
+    //     origin: 'https://singlekey-id.com',
+    //     'user-agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36',
+    //     'sec-fetch-dest': 'empty',
+    //     referer: 'https://singlekey-id.com/' + loginUrl,
+    //     pragma: 'no-cache',
+    //     priority: 'u=1, i',
+    //   },
+    //   params: loginParams,
+    //   data: {
+    //     'UserIdentifierInput.EmailInput.StringValue': this.config.username,
+    //     'h-captcha-response': this.config.captcha,
+    //     __RequestVerificationToken: formData['undefined'],
+    //   },
+    // })
+    //   .then((res) => {
+    //     this.log.debug(JSON.stringify(res.data));
+    //     return this.extractHidden(res.data);
+    //   })
+    //   .catch((error) => {
+    //     this.log.error(error);
+    //     error.response && this.log.error(JSON.stringify(error.response.data));
+    //   });
+    // if (!userResponse) {
+    //   this.log.error('Could not extract user data');
+    //   return;
+    // }
+    // //const query = userResponse.returnPath.split('?')[1].replace(/&amp;/g, '&').replace("ReturnUrl='", 'returnUrl=');
+    // await this.requestClient({
+    //   method: 'post',
+    //   maxBodyLength: Infinity,
+    //   url: 'https://singlekey-id.com' + userResponse.returnPath.split('?')[0],
+    //   headers: {
+    //     'content-type': 'application/x-www-form-urlencoded',
+    //     accept: '*/*',
+    //     'hx-request': 'true',
+    //     'sec-fetch-site': 'same-origin',
+    //     'hx-boosted': 'true',
+    //     'accept-language': 'de-DE,de;q=0.9',
+    //     'sec-fetch-mode': 'cors',
+    //     origin: 'https://singlekey-id.com',
+    //     'user-agent':
+    //       'Mozilla/5.0 (iPhone; CPU iPhone OS 16_7_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
+    //     'sec-fetch-dest': 'empty',
+    //   },
+    //   params: loginParams,
+    //   data: {
+    //     Password: this.config.password,
+    //     RememberMe: 'true',
+    //     __RequestVerificationToken: userResponse['undefined'],
+    //   },
+    // }).catch((error) => {
+    //   this.log.error(error);
+    //   error.response && this.log.error(JSON.stringify(error.response.data));
+    // });
+    // const response = await this.requestClient({
+    //   method: 'get',
+    //   url: 'https://singlekey-id.com' + returnUrl,
+    // })
+    //   .then((res) => {
+    //     this.log.debug(JSON.stringify(res.data));
+    //     this.log.error('No code received.');
+    //     return res;
+    //   })
+    //   .catch((error) => {
+    //     if (error && error.message.includes('Unsupported protocol')) {
+    //       return qs.parse(error.request._options.path.split('?')[1]);
+    //     }
+    //     this.log.error(error);
+    //     error.response && this.log.error(JSON.stringify(error.response.data));
+    //   });
 
-    if (!response) {
-      return;
-    }
+    // if (!response) {
+    //   return;
+    // }
+    const response = qs.parse(this.config.captcha.split('?')[1]);
     await this.requestClient({
       method: 'post',
       url: 'https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/token',
