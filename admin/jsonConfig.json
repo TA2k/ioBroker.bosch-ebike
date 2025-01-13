@@ -122,7 +122,12 @@
     },
     "_captchaImg": {
       "type": "staticImage",
-      "src": "copyurl.png"
+      "src": "copyurl.png",
+      "sm": 6,
+      "xl": 3,
+      "md": 3,
+      "lg": 3,
+      "xs": 12
     },
 
     "captcha": {
