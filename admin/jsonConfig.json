@@ -1,0 +1,153 @@
+{
+  "i18n": false,
+  "items": {
+    "username": {
+      "type": "text",
+      "label": {
+        "en": "App Email",
+        "de": "App-E-Mail",
+        "ru": "Электронная почта приложения",
+        "pt": "Email do aplicativo",
+        "nl": "App-e-mail",
+        "fr": "Courriel de l'application",
+        "it": "E-mail dell'app",
+        "es": "Correo electrónico de la aplicación",
+        "pl": "E-mail aplikacji",
+        "zh-cn": "应用电子邮件"
+      },
+      "newLine": true,
+      "sm": 3
+    },
+    "password": {
+      "type": "password",
+      "newLine": true,
+      "repeat": false,
+      "visible": true,
+      "sm": 3,
+      "label": {
+        "en": "App Password",
+        "de": "App-Passwort",
+        "ru": "Пароль приложения",
+        "pt": "Senha de app",
+        "nl": "App-wachtwoord",
+        "fr": "Mot de passe de l'application",
+        "it": "Password dell'app",
+        "es": "Contraseña de la aplicación",
+        "pl": "Hasło do aplikacji",
+        "zh-cn": "应用密码"
+      }
+    },
+    "_captchaManual": {
+      "type": "staticText",
+      "label": {
+        "en": "1. Open the Url below and login with your account\n  2. Open Developer Console F12 or Option + Command + I\n  3. You see a failed redirect in the Console copy the onebikeapp-ios:// url\n  4. Paste the url in the input field below",
+        "de": "1. Öffnen Sie die unten stehende URL und melden Sie sich mit Ihrem Konto an\n  2. Öffnen Sie die Entwicklerkonsole F12 oder Option + Befehl + I\n  3. Sie sehen eine fehlgeschlagene Weiterleitung in der Konsole, kopieren Sie die onebikeapp-ios:// URL\n  4. Fügen Sie die URL in das Eingabefeld unten ein",
+        "ru": "1. Откройте URL-адрес ниже и войдите в свою учетную запись\n  2. Откройте консоль разработчика F12 или Option + Command + I\n  3. Вы увидите неудачное перенаправление в консоли, скопируйте URL onebikeapp-ios://\n  4. Вставьте URL в поле ввода ниже",
+        "pt": "1. Abra o URL abaixo e faça login com sua conta\n  2. Abra o Console do Desenvolvedor F12 ou Option + Command + I\n  3. Você verá uma redirecionamento falhado no Console, copie o URL onebikeapp-ios://\n  4. Cole o URL no campo de entrada abaixo",
+        "nl": "1. Open de onderstaande URL en log in met uw account\n  2. Open Developer Console F12 of Option + Command + I\n  3. U ziet een mislukte omleiding in de Console, kopieer de onebikeapp-ios:// URL\n  4. Plak de URL in het invoerveld hieronder",
+        "fr": "1. Ouvrez l'URL ci-dessous et connectez-vous avec votre compte\n  2. Ouvrez la console du développeur F12 ou Option + Command + I\n  3. Vous verrez une redirection échouée dans la Console, copiez l'URL onebikeapp-ios://\n  4. Collez l'URL dans le champ d'entrée ci-dessous",
+        "it": "1. Apri l'URL sottostante e accedi con il tuo account\n  2. Apri la console dello sviluppatore F12 o Option + Command + I\n  3. Vedrai un reindirizzamento non riuscito nella Console, copia l'URL onebikeapp-ios://\n  4. Incolla l'URL nel campo di input sottostante",
+        "es": "1. Abra la URL a continuación e inicie sesión con su cuenta\n  2. Abra la Consola de Desarrolladores F12 o Option + Command + I\n  3. Verá una redirección fallida en la Consola, copie la URL onebikeapp-ios://\n  4. Pegue la URL en el campo de entrada a continuación",
+        "pl": "1. Otwórz poniższy adres URL i zaloguj się na swoje konto\n  2. Otwórz konsolę dewelopera F12 lub Option + Command + I\n  3. Zobaczysz nieudane przekierowanie w konsoli, skopiuj URL onebikeapp-ios://\n  4. Wklej URL w polu wejściowym poniżej",
+        "zh-cn": "1. 打开下面的网址并使用您的帐户登录\n  2. 打开开发人员控制台 F12 或 Option + Command + I\n  3. 您会在控制台中看到一个失败的重定向，复制 onebikeapp-ios:// URL\n  4. 将 URL 粘贴到下面的输入字段中"
+      }
+    },
+    "_codeUrl": {
+      "type": "staticLink",
+      "label": {
+        "en": "SingleKey Login Url",
+        "de": "SingleKey Login Url",
+        "ru": "URL входа SingleKey",
+        "pt": "URL de login SingleKey",
+        "nl": "SingleKey Login Url",
+        "fr": "URL de connexion SingleKey",
+        "it": "URL di accesso Single",
+        "es": "URL de inicio de sesión SingleKey",
+        "pl": "URL logowania SingleKey",
+        "zh-cn": "SingleKey 登录网址"
+      },
+      "href": "https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/auth?client_id=one-bike-app&code_challenge=dDp31yHNMAGZeMSXeoOK66WOZOtkZjqYzpdZnfbWZfQ&code_challenge_method=S256&kc_idp_hint=skid&nonce=5bkl6RxVoUl3yFKi0SqgORYowCT16PG6htILaP0ujhQ&prompt=login&redirect_uri=onebikeapp-ios%3A%2F%2Fcom.bosch.ebike.onebikeapp%2Foauth2redirect&response_type=code&scope=openid%20offline_access&state=DECUwcce3we_7TDOt9fiLumGwylUrrjaMyX2vfQM90k",
+      "target": "_blank",
+      "button": true
+    },
+    "captcha": {
+      "type": "text",
+      "newLine": true,
+      "placeholder": "onebikeapp-ios://com.bosch.ebike.onebikeapp/oauth2redirect?state=DECUwcce3we_7T.....",
+      "label": {
+        "en": "Code Url",
+        "de": "Code Url",
+        "ru": "URL кода",
+        "pt": "URL do código",
+        "nl": "Code Url",
+        "fr": "URL du code",
+        "it": "URL del codice",
+        "es": "URL del código",
+        "pl": "URL kodu",
+        "zh-cn": "代码网址"
+      }
+    },
+    "type": {
+      "type": "select",
+      "newLine": true,
+      "sm": 3,
+      "options": [
+        {
+          "label": "eBike Connect",
+          "value": "connect"
+        },
+        {
+          "label": "eBike Flow",
+          "value": "flow"
+        }
+      ],
+      "label": {
+        "en": "App Name",
+        "de": "App Name",
+        "ru": "Имя приложения",
+        "pt": "Nome do aplicativo",
+        "nl": "App Naam",
+        "fr": "App Name",
+        "it": "Nome dell'app",
+        "es": "Nombre de la aplicación",
+        "pl": "Nazwa",
+        "zh-cn": "附录"
+      }
+    },
+    "interval": {
+      "type": "number",
+      "newLine": true,
+      "min": 1,
+      "sm": 2,
+      "label": {
+        "en": "Update interval (in minutes)",
+        "de": "Aktualisierungsintervall (in Minuten)",
+        "ru": "Интервал обновления (в минутах)",
+        "pt": "Intervalo de atualização (em minutos)",
+        "nl": "Update-interval (in minuten)",
+        "fr": "Intervalle de mise à jour (en minutes)",
+        "it": "Intervallo di aggiornamento (in minuti)",
+        "es": "Intervalo de actualización (en minutos)",
+        "pl": "Interwał aktualizacji (w minutach)",
+        "zh-cn": "更新间隔（分钟）"
+      }
+    },
+    "maxTrips": {
+      "type": "number",
+      "newLine": true,
+      "min": 1,
+      "label": {
+        "en": "Max fetched trips",
+        "de": "Max abgerufene Fahrten/Trips",
+        "ru": "Максимальное количество загруженных поездок",
+        "pt": "Máximo de viagens buscadas",
+        "nl": "Max opgehaalde ritten",
+        "fr": "Nombre maximal de voyages récupérés",
+        "it": "Massimo viaggiato",
+        "es": "Máximo de viajes recuperados",
+        "pl": "Maksymalna liczba pobranych podróży",
+        "zh-cn": "最大获取的行程"
+      }
+    }
+  }
+}

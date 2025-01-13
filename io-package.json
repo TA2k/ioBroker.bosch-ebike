@@ -95,6 +95,9 @@
     "connectionType": "cloud",
     "dataSource": "poll",
     "materialize": true,
+    "adminUI": {
+      "config": "json"
+    },
     "plugins": {
       "sentry": {
         "dsn": "https://c9bd6c851b1246da95e6e982aa9b88f3@sentry.iobroker.net/152"
