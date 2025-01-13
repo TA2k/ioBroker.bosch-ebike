@@ -39,9 +39,10 @@
     },
     "_captchaManual": {
       "type": "staticText",
+      "newLine": true,
       "label": {
         "en": "1. Open the Url below and login with your account\n  2. Open Developer Console F12 or Option + Command + I\n  3. You see a failed redirect in the Console copy the onebikeapp-ios:// url\n  4. Paste the url in the input field below",
-        "de": "1. Öffnen Sie die unten stehende URL und melden Sie sich mit Ihrem Konto an\n  2. Öffnen Sie die Entwicklerkonsole F12 oder Option + Befehl + I\n  3. Sie sehen eine fehlgeschlagene Weiterleitung in der Konsole, kopieren Sie die onebikeapp-ios:// URL\n  4. Fügen Sie die URL in das Eingabefeld unten ein",
+        "de": "1. Öffnen Sie die unten stehende URL und melden Sie sich mit Ihrem Konto an\n  2. Öffnen Sie die Entwicklerkonsole F12 oder Option + Command + I\n  3. Sie sehen eine fehlgeschlagene Weiterleitung in der Konsole, kopieren Sie die onebikeapp-ios:// URL\n  4. Fügen Sie die URL in das Eingabefeld unten ein",
         "ru": "1. Откройте URL-адрес ниже и войдите в свою учетную запись\n  2. Откройте консоль разработчика F12 или Option + Command + I\n  3. Вы увидите неудачное перенаправление в консоли, скопируйте URL onebikeapp-ios://\n  4. Вставьте URL в поле ввода ниже",
         "pt": "1. Abra o URL abaixo e faça login com sua conta\n  2. Abra o Console do Desenvolvedor F12 ou Option + Command + I\n  3. Você verá uma redirecionamento falhado no Console, copie o URL onebikeapp-ios://\n  4. Cole o URL no campo de entrada abaixo",
         "nl": "1. Open de onderstaande URL en log in met uw account\n  2. Open Developer Console F12 of Option + Command + I\n  3. U ziet een mislukte omleiding in de Console, kopieer de onebikeapp-ios:// URL\n  4. Plak de URL in het invoerveld hieronder",
@@ -68,7 +69,8 @@
       },
       "href": "https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/auth?client_id=one-bike-app&code_challenge=dDp31yHNMAGZeMSXeoOK66WOZOtkZjqYzpdZnfbWZfQ&code_challenge_method=S256&kc_idp_hint=skid&nonce=5bkl6RxVoUl3yFKi0SqgORYowCT16PG6htILaP0ujhQ&prompt=login&redirect_uri=onebikeapp-ios%3A%2F%2Fcom.bosch.ebike.onebikeapp%2Foauth2redirect&response_type=code&scope=openid%20offline_access&state=DECUwcce3we_7TDOt9fiLumGwylUrrjaMyX2vfQM90k",
       "target": "_blank",
-      "button": true
+      "button": true,
+      "newLine": true
     },
     "captcha": {
       "type": "text",
