@@ -120,6 +120,11 @@
       "button": true,
       "newLine": true
     },
+    "_captchaImg": {
+      "type": "staticImage",
+      "src": "copyurl.png"
+    },
+
     "captcha": {
       "type": "text",
       "newLine": true,
