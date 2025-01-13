@@ -58,7 +58,7 @@
       "newLine": true,
       "label": {
         "en": "2. Open Developer Console F12 or Option + Command + I",
-        "de": "2. Öffnen Sie die Entwicklerkonsole F12 oder Option + Befehl + I",
+        "de": "2. Öffnen Sie die Entwicklerkonsole F12 oder Option + Command + I",
         "ru": "2. Откройте консоль разработчика F12 или Option + Command + I",
         "pt": "2. Abra o Console do Desenvolvedor F12 ou Option + Command + I",
         "nl": "2. Open de ontwikkelaarsconsole F12 of Option + Command + I",
@@ -101,6 +101,15 @@
         "zh-cn": "4. 将URL粘贴到下面的输入字段中"
       }
     },
+    "_captchaImg": {
+      "type": "staticImage",
+      "src": "copyurl.png",
+      "sm": 6,
+      "xl": 3,
+      "md": 3,
+      "lg": 3,
+      "xs": 12
+    },
     "_codeUrl": {
       "type": "staticLink",
       "label": {
@@ -119,15 +128,6 @@
       "target": "_blank",
       "button": true,
       "newLine": true
-    },
-    "_captchaImg": {
-      "type": "staticImage",
-      "src": "copyurl.png",
-      "sm": 6,
-      "xl": 3,
-      "md": 3,
-      "lg": 3,
-      "xs": 12
     },
 
     "captcha": {
