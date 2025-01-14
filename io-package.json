@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "bosch-ebike",
-    "version": "0.1.11",
+    "version": "0.1.12",
     "news": {
+      "0.1.12": {
+        "en": "fix for login use code url instead of captcha",
+        "de": "fix für login-benutzungscode url anstelle von captcha",
+        "ru": "исправить для логина использовать код url вместо captcha",
+        "pt": "corrigir para login usar url código em vez de captcha",
+        "nl": "fix voor login gebruik code url in plaats van captcha",
+        "fr": "fixer pour login utiliser le code url au lieu de captcha",
+        "it": "correzione per l'utilizzo del codice di accesso url invece di captcha",
+        "es": "fijado para el código de acceso url en lugar de captcha",
+        "pl": "fix dla logowania używać kodu url zamiast captcha",
+        "uk": "виправлення коду логіну замість капча",
+        "zh-cn": "用于登录的代码 url 而不是 captcha 的修复"
+      },
       "0.1.11": {
         "en": "fix for login. Deletion of the instance is necessary if the settings screen is not loading",
         "de": "fix für Anmeldung. Löschung der Instanz ist erforderlich, wenn die Einstellungen nicht geladen werden können",
@@ -41,18 +54,6 @@
       },
       "0.0.3": {
         "en": "fix login"
-      },
-      "0.0.2": {
-        "en": "initial release",
-        "de": "Erstveröffentlichung",
-        "ru": "Начальная версия",
-        "pt": "lançamento inicial",
-        "nl": "Eerste uitgave",
-        "fr": "Première version",
-        "it": "Versione iniziale",
-        "es": "Versión inicial",
-        "pl": "Pierwsze wydanie",
-        "zh-cn": "首次出版"
       }
     },
     "titleLang": {
@@ -79,8 +80,14 @@
       "pl": "Adapter do Bosch eBike",
       "zh-cn": "Bosch eBike 适配器"
     },
-    "authors": ["TA2k <tombox2020@gmail.com>"],
-    "keywords": ["bosch", "ebike", "ebike connect"],
+    "authors": [
+      "TA2k <tombox2020@gmail.com>"
+    ],
+    "keywords": [
+      "bosch",
+      "ebike",
+      "ebike connect"
+    ],
     "license": "MIT",
     "platform": "Javascript/Node.js",
     "main": "main.js",
@@ -114,8 +121,12 @@
       }
     ]
   },
-  "encryptedNative": ["password"],
-  "protectedNative": ["password"],
+  "encryptedNative": [
+    "password"
+  ],
+  "protectedNative": [
+    "password"
+  ],
   "native": {
     "username": "",
     "password": "",
