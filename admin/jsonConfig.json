@@ -114,7 +114,7 @@
       "type": "staticLink",
       "label": {
         "en": "SingleKey Login Url Click here",
-        "de": "SingleKey Login Url Hier klicken",
+        "de": "SingleKey Login Url HIER KLICKEN",
         "ru": "URL входа SingleKey Нажмите здесь",
         "pt": "URL de login SingleKey Clique aqui",
         "nl": "SingleKey Login Url Klik hier",
@@ -126,6 +126,7 @@
       },
       "href": "https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/auth?client_id=one-bike-app&code_challenge=dDp31yHNMAGZeMSXeoOK66WOZOtkZjqYzpdZnfbWZfQ&code_challenge_method=S256&kc_idp_hint=skid&nonce=5bkl6RxVoUl3yFKi0SqgORYowCT16PG6htILaP0ujhQ&prompt=login&redirect_uri=onebikeapp-ios%3A%2F%2Fcom.bosch.ebike.onebikeapp%2Foauth2redirect&response_type=code&scope=openid%20offline_access&state=DECUwcce3we_7TDOt9fiLumGwylUrrjaMyX2vfQM90k",
       "target": "_blank",
+      "icon": "info",
       "button": false,
       "newLine": true,
       "style": {
