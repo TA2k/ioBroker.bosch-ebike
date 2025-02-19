@@ -85,6 +85,16 @@
         "zh-cn": "3. 您会在控制台中看到失败的重定向，复制 onebikeapp-ios:// URL"
       }
     },
+    "_captchaImg": {
+      "type": "staticImage",
+      "src": "copyurl.png",
+      "sm": 6,
+      "xl": 3,
+      "md": 3,
+      "lg": 3,
+      "xs": 12,
+      "newLine": true
+    },
     "_captchaManual04": {
       "type": "staticText",
       "newLine": true,
@@ -101,15 +111,7 @@
         "zh-cn": "4. 将URL粘贴到下面的输入字段中"
       }
     },
-    "_captchaImg": {
-      "type": "staticImage",
-      "src": "copyurl.png",
-      "sm": 6,
-      "xl": 3,
-      "md": 3,
-      "lg": 3,
-      "xs": 12
-    },
+
     "_codeUrl": {
       "type": "staticLink",
       "label": {
