@@ -1,5 +1,6 @@
 {
   "i18n": false,
+  "type": "panel",
   "items": {
     "username": {
       "type": "text",
