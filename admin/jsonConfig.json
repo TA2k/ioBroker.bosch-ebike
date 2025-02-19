@@ -129,7 +129,7 @@
       "icon": "warning",
       "variant": "outlined",
       "button": true,
-      "color": "red",
+      "color": "secondary",
       "newLine": true,
       "style": {
         "justifyContent": "flex-start !important",
