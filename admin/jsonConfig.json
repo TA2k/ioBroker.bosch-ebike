@@ -42,8 +42,8 @@
       "type": "staticText",
       "newLine": true,
       "label": {
-        "en": "1. Open the Url below and login with your account",
-        "de": "1. Öffnen Sie die unten stehende URL und melden Sie sich mit Ihrem Konto an",
+        "en": "1. Open the Url below in Chrome and login with your account",
+        "de": "1. Öffnen Sie die URL unten in Chrome und melden Sie sich mit Ihrem Konto an",
         "ru": "1. Откройте URL ниже и войдите в свою учетную запись",
         "pt": "1. Abra a URL abaixo e faça login com sua conta",
         "nl": "1. Open de onderstaande URL en log in met uw account",
@@ -58,8 +58,8 @@
       "type": "staticText",
       "newLine": true,
       "label": {
-        "en": "2. Open Developer Console F12 or Option + Command + I",
-        "de": "2. Öffnen Sie die Entwicklerkonsole F12 oder Option + Command + I",
+        "en": "2. Open Developer Console F12 or Option + Command + I and open the Console tab",
+        "de": "2. Öffnen Sie die Entwicklerkonsole F12 oder Option + Command + I und öffnen Sie den Tab Console",
         "ru": "2. Откройте консоль разработчика F12 или Option + Command + I",
         "pt": "2. Abra o Console do Desenvolvedor F12 ou Option + Command + I",
         "nl": "2. Open de ontwikkelaarsconsole F12 of Option + Command + I",
@@ -132,6 +132,28 @@
       "icon": "warning",
       "variant": "contained",
       "button": true,
+      "color": "secondary",
+      "newLine": true,
+      "style": {
+        "justifyContent": "flex-start !important",
+        "color": "red !important"
+      },
+      "sm": 6,
+      "xl": 3,
+      "md": 3,
+      "lg": 3,
+      "xs": 12
+    },
+    "_codeUrlhref": {
+      "type": "staticLink",
+      "label": {
+        "en": "https://p9.authz.bosch.com/auth/realms/obc/p..."
+      },
+      "href": "https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/auth?client_id=one-bike-app&code_challenge=dDp31yHNMAGZeMSXeoOK66WOZOtkZjqYzpdZnfbWZfQ&code_challenge_method=S256&kc_idp_hint=skid&nonce=5bkl6RxVoUl3yFKi0SqgORYowCT16PG6htILaP0ujhQ&prompt=login&redirect_uri=onebikeapp-ios%3A%2F%2Fcom.bosch.ebike.onebikeapp%2Foauth2redirect&response_type=code&scope=openid%20offline_access&state=DECUwcce3we_7TDOt9fiLumGwylUrrjaMyX2vfQM90k",
+      "target": "_blank",
+      "icon": "warning",
+      "variant": "contained",
+      "button": false,
       "color": "secondary",
       "newLine": true,
       "style": {
