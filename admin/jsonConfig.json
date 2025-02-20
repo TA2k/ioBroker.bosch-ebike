@@ -144,28 +144,6 @@
       "lg": 3,
       "xs": 12
     },
-    "_codeUrlhref": {
-      "type": "staticLink",
-      "label": {
-        "en": "https://p9.authz.bosch.com/auth/realms/obc/p..."
-      },
-      "href": "https://p9.authz.bosch.com/auth/realms/obc/protocol/openid-connect/auth?client_id=one-bike-app&code_challenge=dDp31yHNMAGZeMSXeoOK66WOZOtkZjqYzpdZnfbWZfQ&code_challenge_method=S256&kc_idp_hint=skid&nonce=5bkl6RxVoUl3yFKi0SqgORYowCT16PG6htILaP0ujhQ&prompt=login&redirect_uri=onebikeapp-ios%3A%2F%2Fcom.bosch.ebike.onebikeapp%2Foauth2redirect&response_type=code&scope=openid%20offline_access&state=DECUwcce3we_7TDOt9fiLumGwylUrrjaMyX2vfQM90k",
-      "target": "_blank",
-      "icon": "warning",
-      "variant": "contained",
-      "button": false,
-      "color": "secondary",
-      "newLine": true,
-      "style": {
-        "justifyContent": "flex-start !important",
-        "color": "red !important"
-      },
-      "sm": 6,
-      "xl": 3,
-      "md": 3,
-      "lg": 3,
-      "xs": 12
-    },
 
     "captcha": {
       "type": "text",
