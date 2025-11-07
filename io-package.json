@@ -96,6 +96,7 @@
     "extIcon": "https://raw.githubusercontent.com/TA2k/ioBroker.bosch-ebike/master/admin/bosch-ebike.png",
     "readme": "https://github.com/TA2k/ioBroker.bosch-ebike/blob/master/README.md",
     "loglevel": "info",
+    "tier": 2,
     "mode": "daemon",
     "type": "vehicle",
     "compact": true,
