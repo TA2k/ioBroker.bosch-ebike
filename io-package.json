@@ -88,7 +88,10 @@
       "ebike",
       "ebike connect"
     ],
-    "license": "MIT",
+    "licenseInformation": {
+      "type": "free",
+      "license": "MIT"
+    },
     "platform": "Javascript/Node.js",
     "main": "main.js",
     "icon": "bosch-ebike.png",
