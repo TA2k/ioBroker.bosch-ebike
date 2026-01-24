@@ -9,6 +9,7 @@
   "homepage": "https://github.com/TA2k/ioBroker.bosch-ebike",
   "license": "MIT",
   "keywords": [
+    "ioBroker",
     "bosch",
     "ebike",
     "ebike connect"
