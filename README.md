@@ -49,6 +49,8 @@ bosch-ebike.0.id.remote auf true/false setzen steuert den jeweiligen Befehl
 
 - (TA2k) initial release
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 
 MIT License
