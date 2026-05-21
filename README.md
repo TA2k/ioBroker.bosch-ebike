@@ -29,6 +29,10 @@ bosch-ebike.0.id.remote auf true/false setzen steuert den jeweiligen Befehl
 <https://forum.iobroker.net/topic/55902/test-adapter-bosch-ebik-connect-flow>
 
 ## Changelog
+
+### **WORK IN PROGRESS**
+- (ioBroker-Bot) Adapter requires js-controller >= 6.0.11 now.
+
 ### 0.1.12 (2025-01-14)
 
 - fix for login use code url instead of captcha
