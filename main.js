@@ -466,6 +466,8 @@ class BoschEbike extends utils.Adapter {
       await this.refreshToken();
     }
 
+    await this.updateBatteryFlow();
+
     const trips = await this.requestClient({
       method: 'get',
       url: 'https://obc-rider-activity.prod.connected-biking.cloud/v1/activity?page=0&size=' + this.config.maxTrips + '&sort=-startTime',
@@ -499,7 +501,7 @@ class BoschEbike extends utils.Adapter {
       if (index < 10) {
         index = '0' + index;
       }
-      let details = '';
+      let details;
       if (Object.keys(this.trips).includes(id)) {
         details = this.trips[id];
       } else {
@@ -551,6 +553,173 @@ class BoschEbike extends utils.Adapter {
         native: {},
       });
       await this.setStateAsync('trips.' + index + '.details', JSON.stringify(details), true);
+    }
+  }
+  async updateBatteryFlow() {
+    const baseUrl = 'https://obc-rider-profile.prod.connected-biking.cloud';
+    const headers = {
+      Host: 'obc-rider-profile.prod.connected-biking.cloud',
+      accept: 'application/json',
+      'content-type': 'application/json',
+      authorization: 'Bearer ' + this.session.access_token,
+      'accept-language': 'de-de',
+    };
+
+    const bikes = await this.requestClient({
+      method: 'get',
+      url: baseUrl + '/v1/bike-profile',
+      headers: headers,
+    })
+      .then((res) => {
+        this.log.debug(JSON.stringify(res.data));
+        if (res.data && Array.isArray(res.data.data)) {
+          return res.data.data;
+        }
+        if (Array.isArray(res.data)) {
+          return res.data;
+        }
+        return [];
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          this.log.info('bike-profile receive 401 error. Refresh Token in 60 seconds');
+          this.refreshTokenTimeout && clearTimeout(this.refreshTokenTimeout);
+          this.refreshTokenTimeout = setTimeout(() => {
+            this.refreshToken();
+          }, 1000 * 60);
+          return;
+        }
+        this.log.error(error);
+        error.response && this.log.error(JSON.stringify(error.response.data));
+      });
+
+    if (!bikes || !bikes.length) {
+      return;
+    }
+    this.log.debug(`Found ${bikes.length} bikes`);
+
+    // Account wide subscription status (Flow+ / eBike Connect subscription).
+    await this.requestClient({
+      method: 'get',
+      url: 'https://in-app-purchase.prod.connected-biking.cloud/v1/subscription/status',
+      headers: {
+        Host: 'in-app-purchase.prod.connected-biking.cloud',
+        accept: 'application/json',
+        'content-type': 'application/json',
+        authorization: 'Bearer ' + this.session.access_token,
+        'accept-language': 'de-de',
+      },
+    })
+      .then(async (res) => {
+        this.log.debug(JSON.stringify(res.data));
+        if (!res.data) {
+          return;
+        }
+        await this.json2iob.parse('subscription', res.data, { forceIndex: true, channelName: 'Subscription Status' });
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 404) {
+          this.log.debug('subscription status not available');
+          return;
+        }
+        this.log.error(error);
+        error.response && this.log.error(JSON.stringify(error.response.data));
+      });
+
+    // Account wide bike passes (frame number, theft logs). Matched per bike below.
+    const bikePasses = await this.requestClient({
+      method: 'get',
+      url: 'https://bike-pass.prod.connected-biking.cloud/v1/bike-passes',
+      headers: {
+        Host: 'bike-pass.prod.connected-biking.cloud',
+        accept: 'application/json',
+        'content-type': 'application/json',
+        authorization: 'Bearer ' + this.session.access_token,
+        'accept-language': 'de-de',
+      },
+    })
+      .then((res) => {
+        this.log.debug(JSON.stringify(res.data));
+        return res.data && Array.isArray(res.data.bikePasses) ? res.data.bikePasses : [];
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 404) {
+          this.log.debug('bike passes not available');
+          return [];
+        }
+        this.log.error(error);
+        error.response && this.log.error(JSON.stringify(error.response.data));
+        return [];
+      });
+
+    for (const bike of bikes) {
+      const id = bike.id;
+      if (!id) {
+        continue;
+      }
+
+      // The list endpoint only returns the bike entry; the battery/driveUnit
+      // details live in the single bike profile under data.attributes.
+      await this.requestClient({
+        method: 'get',
+        url: baseUrl + '/v1/bike-profile/' + id,
+        headers: headers,
+      })
+        .then(async (res) => {
+          this.log.debug(JSON.stringify(res.data));
+          if (!res.data) {
+            return;
+          }
+          const profile = res.data.data && res.data.data.attributes ? res.data.data.attributes : res.data.data ? res.data.data : res.data;
+          await this.json2iob.parse(id + '.profile', profile, { forceIndex: true, channelName: 'Bike Profile' });
+        })
+        .catch((error) => {
+          if (error.response && error.response.status === 401) {
+            this.refreshTokenTimeout && clearTimeout(this.refreshTokenTimeout);
+            this.refreshTokenTimeout = setTimeout(() => {
+              this.refreshToken();
+            }, 1000 * 60);
+            return;
+          }
+          this.log.error(error);
+          error.response && this.log.error(JSON.stringify(error.response.data));
+        });
+
+      await this.requestClient({
+        method: 'get',
+        url: baseUrl + '/v1/state-of-charge/' + id,
+        headers: headers,
+      })
+        .then(async (res) => {
+          this.log.debug(JSON.stringify(res.data));
+          if (!res.data) {
+            return;
+          }
+          const soc = res.data.data ? res.data.data : res.data;
+          await this.json2iob.parse(id + '.stateOfCharge', soc, { forceIndex: true, channelName: 'State of Charge' });
+        })
+        .catch((error) => {
+          if (error.response) {
+            if (error.response.status === 404) {
+              this.log.debug('state-of-charge not available for ' + id + ' (bike offline?)');
+              return;
+            }
+            if (error.response.status === 401) {
+              this.refreshTokenTimeout && clearTimeout(this.refreshTokenTimeout);
+              this.refreshTokenTimeout = setTimeout(() => {
+                this.refreshToken();
+              }, 1000 * 60);
+              return;
+            }
+          }
+          this.log.error(error);
+          error.response && this.log.error(JSON.stringify(error.response.data));
+        });
+
+      const bikePass = bikePasses.find((pass) => pass.bikeId === id);
+      if (bikePass) {
+        await this.json2iob.parse(id + '.bikePass', bikePass, { forceIndex: true, channelName: 'Bike Pass' });
+      }
     }
   }
   async refreshToken() {

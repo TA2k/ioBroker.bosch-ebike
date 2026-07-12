@@ -17,14 +17,22 @@
         "zh-cn": "应用电子邮件"
       },
       "newLine": true,
-      "sm": 3
+      "xs": 12,
+      "sm": 6,
+      "md": 4,
+      "lg": 3,
+      "xl": 3
     },
     "password": {
       "type": "password",
       "newLine": true,
       "repeat": false,
       "visible": true,
-      "sm": 3,
+      "xs": 12,
+      "sm": 6,
+      "md": 4,
+      "lg": 3,
+      "xl": 3,
       "label": {
         "en": "App Password",
         "de": "App-Passwort",
@@ -41,6 +49,11 @@
     "_captchaManual01": {
       "type": "staticText",
       "newLine": true,
+      "xs": 12,
+      "sm": 12,
+      "md": 12,
+      "lg": 12,
+      "xl": 12,
       "label": {
         "en": "1. Open the Url below in Chrome and login with your account",
         "de": "1. Öffnen Sie die URL unten in Chrome und melden Sie sich mit Ihrem Konto an",
@@ -57,6 +70,11 @@
     "_captchaManual02": {
       "type": "staticText",
       "newLine": true,
+      "xs": 12,
+      "sm": 12,
+      "md": 12,
+      "lg": 12,
+      "xl": 12,
       "label": {
         "en": "2. Open Developer Console F12 or Option + Command + I and open the Console tab",
         "de": "2. Öffnen Sie die Entwicklerkonsole F12 oder Option + Command + I und öffnen Sie den Tab Console",
@@ -73,6 +91,11 @@
     "_captchaManual03": {
       "type": "staticText",
       "newLine": true,
+      "xs": 12,
+      "sm": 12,
+      "md": 12,
+      "lg": 12,
+      "xl": 12,
       "label": {
         "en": "3. You see a failed redirect in the Console copy the onebikeapp-ios:// url",
         "de": "3. Sie sehen eine fehlgeschlagene Weiterleitung in der Konsole, kopieren Sie die onebikeapp-ios:// URL",
@@ -99,6 +122,11 @@
     "_captchaManual04": {
       "type": "staticText",
       "newLine": true,
+      "xs": 12,
+      "sm": 12,
+      "md": 12,
+      "lg": 12,
+      "xl": 12,
       "label": {
         "en": "4. Paste the url in the input field below",
         "de": "4. Fügen Sie die URL in das unten stehende Eingabefeld ein",
@@ -148,6 +176,11 @@
     "captcha": {
       "type": "text",
       "newLine": true,
+      "xs": 12,
+      "sm": 8,
+      "md": 6,
+      "lg": 4,
+      "xl": 4,
       "placeholder": "onebikeapp-ios://com.bosch.ebike.onebikeapp/oauth2redirect?state=DECUwcce3we_7T.....",
       "label": {
         "en": "Code Url",
@@ -165,7 +198,11 @@
     "type": {
       "type": "select",
       "newLine": true,
-      "sm": 3,
+      "xs": 12,
+      "sm": 6,
+      "md": 4,
+      "lg": 3,
+      "xl": 3,
       "options": [
         {
           "label": "eBike Connect",
@@ -193,7 +230,11 @@
       "type": "number",
       "newLine": true,
       "min": 1,
-      "sm": 2,
+      "xs": 12,
+      "sm": 6,
+      "md": 4,
+      "lg": 3,
+      "xl": 3,
       "label": {
         "en": "Update interval (in minutes)",
         "de": "Aktualisierungsintervall (in Minuten)",
@@ -211,6 +252,11 @@
       "type": "number",
       "newLine": true,
       "min": 1,
+      "xs": 12,
+      "sm": 6,
+      "md": 4,
+      "lg": 3,
+      "xl": 3,
       "label": {
         "en": "Max fetched trips",
         "de": "Max abgerufene Fahrten/Trips",
