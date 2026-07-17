@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "bosch-ebike",
-    "version": "0.1.12",
+    "version": "0.1.13",
     "news": {
+      "0.1.13": {
+        "en": "battery state added",
+        "de": "Batteriestatus hinzugefügt",
+        "ru": "добавлено состояние батареи",
+        "pt": "estado da bateria adicionado",
+        "nl": "batterijstatus toegevoegd",
+        "fr": "État de la batterie ajouté",
+        "it": "stato della batteria aggiunto",
+        "es": "Estado de la batería añadido",
+        "pl": "dodano stan baterii",
+        "uk": "додано стан батареї",
+        "zh-cn": "电池状态已添加"
+      },
       "0.1.12": {
         "en": "fix for login use code url instead of captcha",
         "de": "fix für login-benutzungscode url anstelle von captcha",
@@ -53,10 +66,6 @@
       "0.1.0": {
         "en": "fix flow login",
         "de": "Flow-Login korrigiert"
-      },
-      "0.0.3": {
-        "en": "fix login",
-        "de": "Login korrigiert"
       }
     },
     "titleLang": {

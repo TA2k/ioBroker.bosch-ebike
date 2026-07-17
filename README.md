@@ -33,6 +33,9 @@ This adapter uses Sentry libraries to automatically report exceptions and code e
 <https://forum.iobroker.net/topic/55902/test-adapter-bosch-ebik-connect-flow>
 
 ## Changelog
+### 0.1.13 (2026-07-17)
+- battery state added
+
 ### 0.1.12 (2025-01-14)
 
 - fix for login use code url instead of captcha
